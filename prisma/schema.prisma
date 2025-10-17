@@ -38,5 +38,5 @@ model Block {
   parentId String? // for nested blocks
   position Int
   createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 }
