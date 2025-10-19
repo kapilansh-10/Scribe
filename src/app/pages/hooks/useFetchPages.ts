@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+// "use client"
 
+import { useEffect, useState } from "react";
 
 export function useFetchPages() {
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<{id:string, title: string}[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     
@@ -34,7 +35,6 @@ export function useFetchPages() {
                 setLoading(false)
             } 
         }
-        
         fetchData();
     },[])
 

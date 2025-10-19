@@ -1,8 +1,10 @@
+import PageList  from "./pages/components/PageList";
+
 
 export default function Home() {
   return (
     <div>
-      Hello world
+        <PageList/>
     </div>
   );
 }
