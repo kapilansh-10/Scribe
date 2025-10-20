@@ -1,22 +1,36 @@
-"use client"
+    "use client"
 
-import { useParams } from "next/navigation";
-import { useFetchPageById } from "../hooks/useFetchPageById";
+    import { useParams } from "next/navigation";
+    import { useFetchPageById } from "../hooks/useFetchPageById";
 
-export default function Page() {
 
-    const params = useParams<{ id: string }>();
-
-    const { data, loading, error} = useFetchPageById(params.id);
+    type Block = {
+        id: string,
+        content: string
+        type: string
+    }
     
-    if(loading) return <p>Loading ...</p>
-    if(error) return <p>Error: {error}</p>;
+    export default function Page() {
 
-    return (
-        <div>
-            <h1>Page Data</h1>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-    )
-    
-}
+        const params = useParams<{ id: string }>();
+
+        const { data, loading, error } = useFetchPageById(params.id);
+
+        return (
+            <div>
+                <h1>Page Data</h1>
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {String(error)}</p>}
+                <ul>
+                    {data?.data?.map((block: Block) => (
+                        <li key={block.id}>
+                            {block.type}
+                            <br />
+                            {block.content}
+                        </li>
+                    ))}
+                </ul>
+                {!loading && !error && (data?.data?.length ?? 0) === 0 && <p>No blocks available</p>}
+            </div>
+        )
+    }
