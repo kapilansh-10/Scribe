@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
 
     try {
         const pageId = req.nextUrl.searchParams.get("pageId");
-    
+        console.log(pageId)
         if(pageId !== null) {
             const data = await prisma.block.findMany({
                 where: { pageId },
@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
     catch (error) {
         return NextResponse.json({error: "Error in fetching the block"}, {status: 500})
     }
+    
 }
 
 export async function POST(req: NextRequest) {
@@ -51,3 +52,4 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({error: "Error in creating a new block"}, {status: 500})
     }
 }
+

@@ -19,6 +19,7 @@
         return (
             <div>
                 <h1>Page Data</h1>
+                <button>Add Block</button>
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {String(error)}</p>}
                 <ul>
