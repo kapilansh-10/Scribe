@@ -3,6 +3,7 @@
 import { getPage, createPage, updatePage, deletePage } from "@/utils/apiPages";
 import { useEffect, useState } from "react";
 import { string } from "zod";
+import { id } from "zod/locales";
 
 export default function PageList() {
 
@@ -40,6 +41,24 @@ export default function PageList() {
         }
     }
 
+    const handleEditPage = async (id, title) => {
+
+        try {
+            setEditPageId(id);
+            setNewTitle(title);
+        } 
+        catch (error) {
+            
+        }
+    }
+    
+    const handleSavePage = async (id) => {
+        await updatePage(id, newTitle) 
+        setData(data.map(p => p.id === id ? {...p, title: newTitle}: p))
+        setNewTitle("") 
+        setEditPageId("")
+    }
+
     return (
         <div className="flex justify-center items-center flex-col mt-5 pt-5">
             <h1 className="font-bold">Pages</h1>
@@ -52,11 +71,18 @@ export default function PageList() {
             <div>
                 <ul>
                     {data.map((page) => (
+                        editPageId === page.id ? (
+                            <div className="flex gap-3">
+                                <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+                                <button onClick={() => handleSavePage(page.id)} className="bg-green-500 p-2 rounded-4xl">Save 💾</button>
+                            </div>
+                        ):(
                         <li key={page.id}>
                             {page.title}
-                            <button className="bg-red-600 p-2 m-2 rounded-2xl">🖋️ edit</button>
+                            <button className="bg-red-600 p-2 m-2 rounded-2xl" onClick={() => handleEditPage(page.id, page.title)}>🖋️ edit</button>
                             <button className="bg-red-600 p-2 m-2 rounded-2xl">🗑️ delete</button>
                         </li>
+                        )
                     ))}
                 </ul>
             </div>
