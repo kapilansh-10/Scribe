@@ -13,7 +13,6 @@ export async function PUT(req: NextRequest, {params}: {params: {blockId: string}
         }
 
         const { content, type } = body as UpdateBlockBody;
-        const updatedBlock = { content, type };
 
         const updateBlock = await prisma.block.update({
             where: {
